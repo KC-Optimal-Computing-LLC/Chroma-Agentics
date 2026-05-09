@@ -13,10 +13,12 @@ Build a small working vertical slice. Do not implement placeholders or simulate 
 ## Source of Truth
 
 Use:
+
 - `README.md`
 - `ChromaAgentics_TARGET_ARCHITECTURE_v1.6.md`
 
 The architecture is local-first:
+
 - VS Code Roo fork remains the UI, approval, file-edit, terminal, and MCP execution layer.
 - Backend proposes and streams workflow events.
 - Backend must not directly execute sensitive file/terminal actions.
@@ -33,9 +35,9 @@ Implement the Phase 2 Sprint 1 foundation:
 1. C#/.NET backend solution under `backend/`.
 2. ASP.NET Core minimal API.
 3. Health endpoints:
-   - `GET /health/live`
-   - `GET /health/ready`
-   - `GET /health/dependencies`
+    - `GET /health/live`
+    - `GET /health/ready`
+    - `GET /health/dependencies`
 4. Typed environment/config loading.
 5. `.env.example`.
 6. `docker-compose.yml` for PostgreSQL + backend.
@@ -261,3 +263,4 @@ Prefer honest gaps over fake progress.
 Behavior
 
 Be precise, skeptical, and implementation-focused. Preserve architectural boundaries. Build the smallest real backend slice that future orchestration, persistence, model provider, replay, ACK, and extension bridge work can safely extend.
+```

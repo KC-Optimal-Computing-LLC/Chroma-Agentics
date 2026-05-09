@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${CHROMA_POSTGRES_USER:-chroma}
+      POSTGRES_PASSWORD: ${CHROMA_POSTGRES_PASSWORD:-chroma_dev_password}
+      POSTGRES_DB: ${CHROMA_POSTGRES_DB:-chroma_agentics}
+    ports:
+      - "127.0.0.1:${CHROMA_POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - chroma-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${CHROMA_POSTGRES_USER:-chroma} -d ${CHROMA_POSTGRES_DB:-chroma_agentics}",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/src/ChromaAgentics.Backend/Dockerfile
+    environment:
+      CHROMA_BACKEND_HOST: 0.0.0.0
+      CHROMA_BACKEND_PORT: ${CHROMA_BACKEND_PORT:-5127}
+      CHROMA_BACKEND_ENVIRONMENT: ${CHROMA_BACKEND_ENVIRONMENT:-Development}
+      CHROMA_DATABASE_CONNECTION_STRING: Host=postgres;Port=5432;Database=${CHROMA_POSTGRES_DB:-chroma_agentics};Username=${CHROMA_POSTGRES_USER:-chroma};Password=${CHROMA_POSTGRES_PASSWORD:-chroma_dev_password}
+      CHROMA_OLLAMA_BASE_URL: ${CHROMA_OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      CHROMA_REQUIRE_POSTGRES: ${CHROMA_REQUIRE_POSTGRES:-true}
+      CHROMA_REQUIRE_OLLAMA: ${CHROMA_REQUIRE_OLLAMA:-false}
+      CHROMA_DEV_AUTH_TOKEN: ${CHROMA_DEV_AUTH_TOKEN:-change-me-local-dev-token}
+      CHROMA_ALLOW_LAN_BINDING: "true"
+    ports:
+      - "127.0.0.1:${CHROMA_BACKEND_PORT:-5127}:${CHROMA_BACKEND_PORT:-5127}"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  chroma-postgres-data:

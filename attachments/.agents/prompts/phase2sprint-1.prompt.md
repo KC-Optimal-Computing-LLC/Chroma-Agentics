@@ -9,6 +9,7 @@ Implement Phase 2 Sprint 1: the first real C#/.NET backend foundation with healt
 Chroma Agentics is an independent Roo Code fork evolving into a local-first agentic development platform.
 
 Architecture rules:
+
 - VS Code extension remains responsible for UI, user approval, file edits, terminal execution, and MCP/tool execution.
 - Backend handles future orchestration, persistence, model access, event streaming, and durable workflow state.
 - Backend must only propose sensitive actions. It must not execute file/terminal actions directly.
@@ -22,6 +23,7 @@ Architecture rules:
 Create a working backend foundation and minimal contract slice.
 
 This sprint should prove:
+
 - backend can start locally
 - health endpoints work
 - local config works
@@ -39,6 +41,7 @@ Suggested implementation order: (1) project scaffolding and configuration, (2) h
 Inspect the repo before editing.
 
 Report:
+
 1. existing folder structure
 2. whether `backend/`, `db/`, `docs/`, `.env.example`, or `docker-compose.yml` exist
 3. existing .NET projects, if any
@@ -342,3 +345,4 @@ Risks
 Next sprint recommendation
 
 Be honest. A small tested vertical slice beats a grand unverified pile of architectural confetti.
+```

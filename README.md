@@ -80,16 +80,16 @@ If you are a contributor to the original Roo Code project and have concerns abou
 
 ## Core vs Experimental Scope
 
-| Area                        | Tooling                                      | Scope           | Purpose |
-|-----------------------------|----------------------------------------------|-----------------|---------|
-| Editor agent experience     | Roo Code fork                                | Core            | VS Code-based coding workflows and human interaction |
-| Backend runtime             | C# / .NET                                    | Core            | Durable service layer and API bridge |
-| Agent orchestration         | Microsoft Agent Framework 1.0+               | Core            | Multi-agent workflows and durability inside the backend |
-| State and memory            | PostgreSQL + pgvector                        | Core            | Agent state, checkpoints, memory, and retrieval |
-| Local inference             | Ollama                                       | Core            | Private local model execution |
-| Business process graphs     | LangGraph                                    | Exploratory     | Complex long-running workflows with branching and pause/resume (later phases) |
-| Visual integrations         | n8n                                          | Exploratory     | Connecting business tools and non-developer workflow automation (later phases, subject to licensing review) |
-| Web dashboard               | Next.js                                      | Roadmap         | Admin, audit, and team interfaces |
+| Area                    | Tooling                        | Scope       | Purpose                                                                                                     |
+| ----------------------- | ------------------------------ | ----------- | ----------------------------------------------------------------------------------------------------------- |
+| Editor agent experience | Roo Code fork                  | Core        | VS Code-based coding workflows and human interaction                                                        |
+| Backend runtime         | C# / .NET                      | Core        | Durable service layer and API bridge                                                                        |
+| Agent orchestration     | Microsoft Agent Framework 1.0+ | Core        | Multi-agent workflows and durability inside the backend                                                     |
+| State and memory        | PostgreSQL + pgvector          | Core        | Agent state, checkpoints, memory, and retrieval                                                             |
+| Local inference         | Ollama                         | Core        | Private local model execution                                                                               |
+| Business process graphs | LangGraph                      | Exploratory | Complex long-running workflows with branching and pause/resume (later phases)                               |
+| Visual integrations     | n8n                            | Exploratory | Connecting business tools and non-developer workflow automation (later phases, subject to licensing review) |
+| Web dashboard           | Next.js                        | Roadmap     | Admin, audit, and team interfaces                                                                           |
 
 **Note on n8n**: Integration is exploratory and subject to licensing review (n8n uses a Sustainable Use License with commercial restrictions) before any bundled, redistributed, or commercial deployment model is considered.
 
@@ -113,6 +113,7 @@ This layered approach aims to give developers a familiar surface in VS Code, ope
 ## Key Features (Intended)
 
 ### Preserved from Roo Code
+
 - Specialized modes (Code, Architect, Ask, Debug, Custom, Orchestrator)
 - Natural language code generation, refactoring, and codebase Q&A
 - Checkpoint navigation and granular approval flows
@@ -120,6 +121,7 @@ This layered approach aims to give developers a familiar surface in VS Code, ope
 - Webview UI and configuration system
 
 ### Planned Core Additions
+
 - Microsoft Agent Framework 1.0+ orchestration (sequential, concurrent, handoff, group collaboration workflows)
 - C#/.NET backend service for durable execution and state management
 - PostgreSQL + pgvector for conversation state, agent memory, and RAG
@@ -127,6 +129,7 @@ This layered approach aims to give developers a familiar surface in VS Code, ope
 - Optional Next.js layer for dashboards and non-editor interfaces
 
 ### Exploratory (Later Phases)
+
 - LangGraph for complex stateful business graphs
 - n8n for visual workflow composition and business system integration
 
@@ -150,10 +153,12 @@ Ollama (default local)  |  Other providers (configurable)
 ```
 
 **Future / Experimental layers** (evaluated in later phases):
+
 - LangGraph services for specialized long-running business workflows
 - n8n for visual workflow integrations
 
 Integration boundaries that still need definition and implementation:
+
 - Extension ↔ Backend communication protocol and auth model
 - How file/terminal actions remain under user control
 - RAG chunking, embedding model, and retrieval strategy
@@ -193,6 +198,7 @@ LangGraph and n8n may be useful for specialized business workflows and visual in
 Chroma Agentics is designed with a local-first default.
 
 **Default privacy posture:**
+
 - Local model inference via Ollama when configured
 - Local PostgreSQL for state and memory
 - No mandatory cloud model providers
@@ -200,6 +206,7 @@ Chroma Agentics is designed with a local-first default.
 - Clear separation between extension UI, backend orchestration, and persistent storage
 
 **Important limitations:**
+
 - Privacy guarantees depend on the model providers you enable. Cloud providers will receive prompts if used.
 - Logs, traces, embeddings, and database records may contain sensitive code or business information.
 - Users are responsible for securing PostgreSQL instances, backend ports, and Ollama endpoints.
@@ -241,9 +248,9 @@ pnpm install
 
 ### Option B: Full Stack (Backend + Services) — Work in Progress
 
-The backend, database, and orchestration layers are still being built. Current steps are exploratory.
+The first backend foundation slice is available under `backend/`. It includes health endpoints, local configuration, PostgreSQL/Ollama dependency status, and a minimal authenticated WebSocket event stream.
 
-We will publish a working `docker-compose.yml`, `.env.example`, and step-by-step guide once the backend shell and database migrations are in the repository.
+Start with `docs/GETTING_STARTED_BACKEND.md`, `.env.example`, and `docker-compose.yml`. Database migrations, durable workflows, model chat, RAG, and extension bridge behavior are still planned work.
 
 **Do not expect a one-command “it just works” experience today.** This is an active development repository.
 
@@ -254,8 +261,8 @@ We will publish a working `docker-compose.yml`, `.env.example`, and step-by-step
 Chroma Agentics is in early development. Current limitations include:
 
 - The full backend stack is not implemented yet.
-- The extension/backend API contract is not finalized.
-- PostgreSQL, pgvector, and Ollama integrations are planned but not currently available.
+- The extension/backend API contract has a Sprint 1 starter slice but is not finalized.
+- PostgreSQL and Ollama dependency health checks exist; pgvector, durable schema, RAG, and Ollama chat are planned but not currently available.
 - Microsoft Agent Framework integration is planned but not yet wired into the runtime.
 - LangGraph and n8n are exploratory and not part of the initial core runtime.
 - Installation instructions are limited until the Roo Code fork baseline is verified.
@@ -285,7 +292,7 @@ Chroma Agentics is not intended to:
 ├── db/                     # Planned PostgreSQL migrations and schema
 ├── frontend/               # Optional future Next.js dashboard (roadmap)
 ├── docs/                   # Architecture, setup, and deployment documentation
-└── .env.example            # Planned local development configuration (to be added)
+└── .env.example            # Backend local development configuration
 ```
 
 Some folders may not exist yet while the project is in early development.
@@ -335,52 +342,58 @@ These are the best starting points for new contributors. Planned issue labels in
 
 ## Tech Stack & Implementation State
 
-| Layer                  | Technology                                      | Scope          | Implementation State              |
-|------------------------|-------------------------------------------------|----------------|-----------------------------------|
-| Editor Integration     | TypeScript, VS Code APIs, pnpm                 | Core           | Imported, pending verification    |
-| Orchestration          | Microsoft Agent Framework 1.0+ (.NET)          | Core           | Planned                           |
-| Backend                | C# / .NET 8+                                   | Core           | Planned                           |
-| Persistence & RAG      | PostgreSQL + pgvector                          | Core           | Planned                           |
-| Inference              | Ollama (primary), pluggable providers          | Core           | Planned                           |
-| Observability          | OpenTelemetry-first                            | Core           | Planned                           |
-| LangGraph experiment tracing | LangSmith optional                        | Exploratory    | Exploratory                       |
-| Optional Web Layer     | Next.js / React                                | Roadmap        | Roadmap                           |
-| Advanced Business Logic| LangGraph                                      | Exploratory    | Exploratory                       |
-| Visual Integration     | n8n                                            | Exploratory    | Exploratory                       |
+| Layer                        | Technology                            | Scope       | Implementation State           |
+| ---------------------------- | ------------------------------------- | ----------- | ------------------------------ |
+| Editor Integration           | TypeScript, VS Code APIs, pnpm        | Core        | Imported, pending verification |
+| Orchestration                | Microsoft Agent Framework 1.0+ (.NET) | Core        | Planned                        |
+| Backend                      | C# / .NET 8+                          | Core        | Planned                        |
+| Persistence & RAG            | PostgreSQL + pgvector                 | Core        | Planned                        |
+| Inference                    | Ollama (primary), pluggable providers | Core        | Planned                        |
+| Observability                | OpenTelemetry-first                   | Core        | Planned                        |
+| LangGraph experiment tracing | LangSmith optional                    | Exploratory | Exploratory                    |
+| Optional Web Layer           | Next.js / React                       | Roadmap     | Roadmap                        |
+| Advanced Business Logic      | LangGraph                             | Exploratory | Exploratory                    |
+| Visual Integration           | n8n                                   | Exploratory | Exploratory                    |
 
 ---
 
 ## Roadmap
 
 ### Phase 1: Fork & Baseline (Current focus)
+
 - Preserve Roo Code extension functionality and build process
 - Update branding, metadata, and extension identity
 - Add Fork Notice and license compliance documentation
 - Establish contribution and code of conduct processes
 
 ### Phase 2: Backend Foundation
+
 - C#/.NET backend service skeleton
 - Extension ↔ Backend API definition (HTTP/WebSocket)
 - Basic streaming of agent events
 - Local development auth/binding
 
 ### Phase 3: Model Provider Layer
+
 - Ollama chat adapter with streaming
 - Local model discovery and capability metadata
 - Provider abstraction for future cloud adapters
 
 ### Phase 4: Persistence & Memory
+
 - PostgreSQL schema and Entity Framework migrations
 - Conversation and agent state storage
 - pgvector embeddings table and basic retrieval pipeline
 
 ### Phase 5: Microsoft Agent Framework Integration + Hybrid Exploration
+
 - Sequential and concurrent workflow support via MAF
 - Handoff and group collaboration patterns
 - Begin evaluation of LangGraph for complex stateful business graphs
 - Explore n8n as visual orchestration layer (subject to licensing review)
 
 ### Phase 6: Team & Business Layer (Later)
+
 - Optional Next.js dashboard
 - Basic admin / audit views
 - Documentation and deployment guides aimed at KC small business teams
@@ -390,6 +403,7 @@ These are the best starting points for new contributors. Planned issue labels in
 ## Phase Exit Criteria
 
 ### Phase 1: Fork & Baseline is complete when
+
 - The extension installs dependencies successfully.
 - The extension builds without unexpected errors.
 - A development host launches in VS Code.
@@ -398,6 +412,7 @@ These are the best starting points for new contributors. Planned issue labels in
 - License, NOTICE, fork attribution, and basic contribution docs exist.
 
 ### Phase 2: Backend Foundation is complete when
+
 - The C#/.NET backend starts locally.
 - A health endpoint is available.
 - The extension can connect to the backend.
@@ -406,18 +421,21 @@ These are the best starting points for new contributors. Planned issue labels in
 - Backend health endpoint is covered by an automated test.
 
 ### Phase 3: Model Provider Layer is complete when
+
 - Ollama connectivity is implemented.
 - Streaming model responses work through the backend.
 - Local model discovery is supported.
 - Provider capability metadata is documented.
 
 ### Phase 4: Persistence & Memory is complete when
+
 - PostgreSQL schema and migrations exist.
 - Agent state and conversation state can be persisted.
 - pgvector is enabled for embeddings.
 - A basic retrieval pipeline is demonstrated.
 
 ### Phase 5: Microsoft Agent Framework integration is complete when
+
 - Sequential workflow orchestration is demonstrated.
 - Concurrent workflow orchestration is demonstrated.
 - Handoff workflow behavior is demonstrated.
@@ -446,7 +464,7 @@ Before broader contribution, the repository should include the following files t
 - `CODE_OF_CONDUCT.md`
 - `SECURITY.md`
 
-Additional files (`.env.example`, `docker-compose.yml`) will be added as the backend and database components are implemented. Issue templates should be added before broader contribution begins.
+Backend local development files (`.env.example`, `docker-compose.yml`) now exist for the Sprint 1 foundation slice. Issue templates should be added before broader contribution begins.
 
 ---
 
@@ -508,6 +526,6 @@ More about our work: https://kcoptimal.com
 
 ---
 
-*Chroma Agentics — Building a credible, local-first agentic development platform on top of a proven foundation.*
+_Chroma Agentics — Building a credible, local-first agentic development platform on top of a proven foundation._
 
 For questions, issues, or involvement in the Kansas City AI tooling community, open a GitHub issue.
