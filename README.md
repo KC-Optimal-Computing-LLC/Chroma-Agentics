@@ -1,189 +1,222 @@
-<p align="center">
-  <a href="https://marketplace.visualstudio.com/items?itemName=RooVeterinaryInc.roo-cline"><img src="https://img.shields.io/badge/VS_Code_Marketplace-007ACC?style=flat&logo=visualstudiocode&logoColor=white" alt="VS Code Marketplace"></a>
-  <a href="https://x.com/roocode"><img src="https://img.shields.io/badge/roocode-000000?style=flat&logo=x&logoColor=white" alt="X"></a>
-  <a href="https://youtube.com/@roocodeyt?feature=shared"><img src="https://img.shields.io/badge/YouTube-FF0000?style=flat&logo=youtube&logoColor=white" alt="YouTube"></a>
-  <a href="https://discord.gg/roocode"><img src="https://img.shields.io/badge/Join%20Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Join Discord"></a>
-  <a href="https://www.reddit.com/r/RooCode/"><img src="https://img.shields.io/badge/Join%20r%2FRooCode-FF4500?style=flat&logo=reddit&logoColor=white" alt="Join r/RooCode"></a>
-</p>
-<p align="center">
-  <em>Get help fast → <a href="https://discord.gg/roocode">Join Discord</a> • Prefer async? → <a href="https://www.reddit.com/r/RooCode/">Join r/RooCode</a></em>
-</p>
+# Chroma Agentics
 
-# Roo Code
+> **Unlocking agentic power for developers and teams — inspired by the empowering force of Chroma.**
 
-> Your AI-Powered Dev Team, Right in Your Editor
+**Chroma Agentics** is a community-driven fork and thoughtful evolution of [Roo Code](https://github.com/RooCodeInc/Roo-Code), the powerful VS Code extension that brings a complete AI development team directly into your editor. 
 
-## What's New in v3.53.0
+We’ve integrated the production-ready **Microsoft Agent Framework** for sophisticated multi-agent orchestration, a high-performance **C# backend** for reliability and speed, **PostgreSQL** for persistent agent state, long-term memory, and Retrieval-Augmented Generation (RAG), and **Ollama** for private, local-first model inference.
 
-> ### The Roo Code plugin is not going away.
->
-> You may have seen the [recent announcement](https://x.com/mattrubens/status/2046636598859559114) that Roo Code hit 3 million installs and the original team is going all-in on Roomote. We know that news was hard for a lot of you. This plugin means a lot to us and to you, and we hear you.
->
-> The good news: **a community team has stepped up to carry Roo Code forward**, and we're working with them on an official handoff so the plugin you rely on keeps getting maintained and improved.
+Named after the mystical “Chroma” energy in the classic 2005 adventure game *Indigo Prophecy* (released as *Fahrenheit* in Europe), Chroma Agentics represents the unlocking of intelligent, collaborative agentic workflows — while remaining grounded in open-source values, privacy, and real-world practicality.
 
-**What's new in this release:**
-
-- Add GPT-5.5 support via the OpenAI Codex provider.
-- Add Claude Opus 4.7 support on Vertex AI.
-- Add previous checkpoint navigation controls in chat so you can step back through prior checkpoints more easily.
-
-<details>
-  <summary>🌐 Available languages</summary>
-
-- [English](README.md)
-- [Català](locales/ca/README.md)
-- [Deutsch](locales/de/README.md)
-- [Español](locales/es/README.md)
-- [Français](locales/fr/README.md)
-- [हिंदी](locales/hi/README.md)
-- [Bahasa Indonesia](locales/id/README.md)
-- [Italiano](locales/it/README.md)
-- [日本語](locales/ja/README.md)
-- [한국어](locales/ko/README.md)
-- [Nederlands](locales/nl/README.md)
-- [Polski](locales/pl/README.md)
-- [Português (BR)](locales/pt-BR/README.md)
-- [Русский](locales/ru/README.md)
-- [Türkçe](locales/tr/README.md)
-- [Tiếng Việt](locales/vi/README.md)
-- [简体中文](locales/zh-CN/README.md)
-- [繁體中文](locales/zh-TW/README.md)
-- ...
-    </details>
+**Maintained with support from KC Optimal Computing** — *We’re here to help KC.*
 
 ---
 
-## What Can Roo Code Do For YOU?
+## Why Chroma Agentics?
 
-- Generate Code from natural language descriptions and specs
-- Adapt with Modes: Code, Architect, Ask, Debug, and Custom Modes
-- Refactor & Debug existing code
-- Write & Update documentation
-- Answer Questions about your codebase
-- Automate repetitive tasks
-- Utilize MCP Servers
+Modern development demands more than simple autocomplete or chat. Teams need reliable, orchestratable AI agents that can plan, execute, remember, and collaborate — all while keeping data private and systems maintainable.
 
-## Modes
+Chroma Agentics delivers:
 
-Roo Code adapts to how you work:
+- The proven, loved Roo Code editor experience (modes, checkpoints, codebase awareness)
+- Enterprise-grade multi-agent orchestration via Microsoft Agent Framework
+- A robust C# service layer built for performance and integration
+- Persistent, queryable memory and RAG powered by PostgreSQL
+- True local/private operation with Ollama (no forced cloud lock-in)
+- Accessibility for both experienced developers and non-technical KC small business teams
 
-- Code Mode: everyday coding, edits, and file ops
-- Architect Mode: plan systems, specs, and migrations
-- Ask Mode: fast answers, explanations, and docs
-- Debug Mode: trace issues, add logs, isolate root causes
-- Custom Modes: build specialized modes for your team or workflow
-
-Learn more: [Using Modes](https://docs.roocode.com/basic-usage/using-modes) • [Custom Modes](https://docs.roocode.com/advanced-usage/custom-modes)
-
-## Tutorial & Feature Videos
-
-<div align="center">
-
-|                                                                                                                                                                           |                                                                                                                                                                            |                                                                                                                                                                          |
-| :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| <a href="https://www.youtube.com/watch?v=Mcq3r1EPZ-4"><img src="https://img.youtube.com/vi/Mcq3r1EPZ-4/maxresdefault.jpg" width="100%"></a><br><b>Installing Roo Code</b> | <a href="https://www.youtube.com/watch?v=ZBML8h5cCgo"><img src="https://img.youtube.com/vi/ZBML8h5cCgo/maxresdefault.jpg" width="100%"></a><br><b>Configuring Profiles</b> | <a href="https://www.youtube.com/watch?v=r1bpod1VWhg"><img src="https://img.youtube.com/vi/r1bpod1VWhg/maxresdefault.jpg" width="100%"></a><br><b>Codebase Indexing</b>  |
-|    <a href="https://www.youtube.com/watch?v=iiAv1eKOaxk"><img src="https://img.youtube.com/vi/iiAv1eKOaxk/maxresdefault.jpg" width="100%"></a><br><b>Custom Modes</b>     |     <a href="https://www.youtube.com/watch?v=Ho30nyY332E"><img src="https://img.youtube.com/vi/Ho30nyY332E/maxresdefault.jpg" width="100%"></a><br><b>Checkpoints</b>      | <a href="https://www.youtube.com/watch?v=HmnNSasv7T8"><img src="https://img.youtube.com/vi/HmnNSasv7T8/maxresdefault.jpg" width="100%"></a><br><b>Context Management</b> |
-
-</div>
-<p align="center">
-<a href="https://docs.roocode.com/tutorial-videos">More quick tutorial and feature videos...</a>
-</p>
-
-## Resources
-
-- **[Documentation](https://docs.roocode.com):** The official guide to installing, configuring, and mastering Roo Code.
-- **[YouTube Channel](https://youtube.com/@roocodeyt?feature=shared):** Watch tutorials and see features in action.
-- **[Discord Server](https://discord.gg/roocode):** Join the community for real-time help and discussion.
-- **[Reddit Community](https://www.reddit.com/r/RooCode):** Share your experiences and see what others are building.
-- **[GitHub Issues](https://github.com/RooCodeInc/Roo-Code/issues):** Report bugs and track development.
-- **[Feature Requests](https://github.com/RooCodeInc/Roo-Code/discussions/categories/feature-requests?discussions_q=is%3Aopen+category%3A%22Feature+Requests%22+sort%3Atop):** Have an idea? Share it with the developers.
+This project exists to accelerate Kansas City small businesses and developers with trustworthy, transparent, open-source AI tools — not hype.
 
 ---
 
-## Local Setup & Development
+## ✨ Key Features
 
-1. **Clone** the repo:
+### From the Roo Code Foundation (Preserved & Enhanced)
+- **Specialized Agent Modes**: Code, Architect, Ask, Debug, Test, Custom, and Orchestrator
+- **Natural Language Code Generation & Refactoring**
+- **Deep Codebase Understanding** with semantic search and context
+- **Checkpoint Navigation** — step back through agent actions
+- **MCP Server Integration** and terminal command execution (with approval)
+- **Granular Control** — approve file changes and commands
 
-```sh
-git clone https://github.com/RooCodeInc/Roo-Code.git
+### New in Chroma Agentics
+- **Microsoft Agent Framework Orchestration** — Native C#/.NET support for sequential, concurrent, handoff, and group collaboration workflows with checkpointing and human-in-the-loop
+- **High-Performance C# Backend** — Reliable service layer for agent execution, state management, and API bridging
+- **PostgreSQL Persistence & RAG** — Long-term agent memory, conversation history, and powerful retrieval over codebases and documents
+- **Private by Default with Ollama** — Run powerful open models locally or on your own infrastructure
+- **Optional Next.js Web Layer** — Dashboards and interfaces for teams or non-VS Code users
+- **Observability & Durability** — Built with patterns from Microsoft Agent Framework (OpenTelemetry-ready, durable workflows)
+
+### Designed for KC Small Business Reality
+- On-site server deployment options
+- Training paths and documentation for non-technical users
+- Focus on trust, transparency, and practical outcomes over flashy demos
+- Community education and long-term relationship building
+
+---
+
+## 🏗️ Architecture Overview
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    VS Code Extension                         │
+│              (Roo Code Fork — Editor Integration)            │
+│   Modes • Checkpoints • File Ops • Terminal • MCP Servers   │
+└───────────────────────────┬─────────────────────────────────┘
+                            │ Feature API / HTTP + WebSocket
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    C# Backend Service                        │
+│   • Microsoft Agent Framework Orchestration (multi-agent)   │
+│   • Workflow patterns: Sequential • Concurrent • Handoff    │
+│   • PostgreSQL (State, Memory, pgvector RAG)                │
+│   • Observability & Durable Execution                       │
+└───────────────────────────┬─────────────────────────────────┘
+                            │
+            ┌───────────────┴───────────────┐
+            ▼                               ▼
+┌──────────────────────┐      ┌──────────────────────────────┐
+│   Ollama (Local)     │      │   Optional: Next.js Frontend │
+│   Private Inference  │      │   Dashboards • Team UI       │
+└──────────────────────┘      └──────────────────────────────┘
 ```
 
-2. **Install dependencies**:
-
-```sh
-pnpm install
-```
-
-3. **Run the extension**:
-
-There are several ways to run the Roo Code extension:
-
-### Development Mode (F5)
-
-For active development, use VSCode's built-in debugging:
-
-Press `F5` (or go to **Run** → **Start Debugging**) in VSCode. This will open a new VSCode window with the Roo Code extension running.
-
-- Changes to the webview will appear immediately.
-- Changes to the core extension will also hot reload automatically.
-
-### Automated VSIX Installation
-
-To build and install the extension as a VSIX package directly into VSCode:
-
-```sh
-pnpm install:vsix [-y] [--editor=<command>]
-```
-
-This command will:
-
-- Ask which editor command to use (code/cursor/code-insiders) - defaults to 'code'
-- Uninstall any existing version of the extension.
-- Build the latest VSIX package.
-- Install the newly built VSIX.
-- Prompt you to restart VS Code for changes to take effect.
-
-Options:
-
-- `-y`: Skip all confirmation prompts and use defaults
-- `--editor=<command>`: Specify the editor command (e.g., `--editor=cursor` or `--editor=code-insiders`)
-
-### Manual VSIX Installation
-
-If you prefer to install the VSIX package manually:
-
-1.  First, build the VSIX package:
-    ```sh
-    pnpm vsix
-    ```
-2.  A `.vsix` file will be generated in the `bin/` directory (e.g., `bin/roo-cline-<version>.vsix`).
-3.  Install it manually using the VSCode CLI:
-    ```sh
-    code --install-extension bin/roo-cline-<version>.vsix
-    ```
+This architecture keeps sensitive work local and private while giving teams powerful orchestration tools.
 
 ---
 
-We use [changesets](https://github.com/changesets/changesets) for versioning and publishing. Check our `CHANGELOG.md` for release notes.
+## 🚀 Getting Started
+
+### Prerequisites
+- Visual Studio Code (or compatible editor supporting VS Code extensions)
+- [.NET SDK](https://dotnet.microsoft.com/download) (8.0+ recommended)
+- [PostgreSQL](https://www.postgresql.org/) (with pgvector extension recommended for RAG)
+- [Ollama](https://ollama.com/) (for local models)
+- Node.js 18+ and pnpm (for extension and optional frontend development)
+
+### Development Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/KC-optimal-computing-llc/ChromaAgentics.git
+   cd ChromaAgentics
+   ```
+
+2. **Extension Layer (Roo Code base)**
+   ```bash
+   pnpm install
+   # Build VSIX or run in development mode (F5 in VS Code)
+   ```
+
+3. **C# Backend Service**
+   ```bash
+   cd backend
+   dotnet restore
+   dotnet build
+   
+   # Configure your environment (appsettings.json or .env)
+   # - PostgreSQL connection string
+   # - Ollama base URL (default: http://localhost:11434)
+   ```
+
+4. **Database Setup**
+   - Create PostgreSQL database
+   - Run provided migration scripts (see `/db` or `docs/migrations.md`)
+   - Enable pgvector extension if using advanced RAG
+
+5. **Start the Stack**
+   ```bash
+   # Terminal 1: C# Backend
+   cd backend && dotnet run
+
+   # Terminal 2: Ollama
+   ollama serve
+
+   # Terminal 3: (Optional) Frontend
+   cd frontend && npm install && npm run dev
+   ```
+
+6. **Launch the Extension**
+   - Open the project in VS Code
+   - Press `F5` to launch a development host with the extension loaded
+   - Or build and install the VSIX package
+
+For detailed, step-by-step instructions tailored to different environments (including on-site server setups), see the **[Getting Started Guide](docs/GETTING_STARTED.md)** (coming soon in this repository).
 
 ---
 
-## Disclaimer
+## 🛠️ Tech Stack
 
-**Please note** that Roo Code, Inc does **not** make any representations or warranties regarding any code, models, or other tools provided or made available in connection with Roo Code, any associated third-party tools, or any resulting outputs. You assume **all risks** associated with the use of any such tools or outputs; such tools are provided on an **"AS IS"** and **"AS AVAILABLE"** basis. Such risks may include, without limitation, intellectual property infringement, cyber vulnerabilities or attacks, bias, inaccuracies, errors, defects, viruses, downtime, property loss or damage, and/or personal injury. You are solely responsible for your use of any such tools or outputs (including, without limitation, the legality, appropriateness, and results thereof).
+| Layer              | Technology                          | Purpose                              |
+|--------------------|-------------------------------------|--------------------------------------|
+| Editor Integration | TypeScript, VS Code APIs, pnpm     | Roo Code fork — familiar UX         |
+| Orchestration      | Microsoft Agent Framework (.NET)   | Multi-agent workflows, patterns     |
+| Backend            | C# / .NET 8+, ASP.NET Core         | Performance, reliability, bridging  |
+| Persistence & RAG  | PostgreSQL + pgvector              | State, memory, intelligent retrieval|
+| Inference          | Ollama (pluggable)                 | Private, local open-source models   |
+| Optional Frontend  | Next.js, React, TypeScript         | Web dashboards & team interfaces    |
+| Observability      | OpenTelemetry (via MAF patterns)   | Tracing, monitoring, debugging      |
 
----
-
-## Contributing
-
-We love community contributions! Get started by reading our [CONTRIBUTING.md](CONTRIBUTING.md).
-
----
-
-## License
-
-[Apache 2.0 © 2025 Roo Code, Inc.](./LICENSE)
+We prioritize open-source components and local execution to maximize privacy and control for KC businesses.
 
 ---
 
-**Enjoy Roo Code!** Whether you keep it on a short leash or let it roam autonomously, we can’t wait to see what you build. If you have questions or feature ideas, drop by our [Reddit community](https://www.reddit.com/r/RooCode/) or [Discord](https://discord.gg/roocode). Happy coding!
+## 🤝 Contributing
+
+Chroma Agentics thrives on community input. Whether you’re fixing bugs, improving documentation, adding features, or providing feedback from real KC business use cases — your contributions matter.
+
+Please read:
+- [CONTRIBUTING.md](CONTRIBUTING.md)
+- [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+
+We follow a transparent, respectful process aligned with KC Optimal Computing’s values of trust and long-term community building.
+
+This project is maintained with active support from KC Optimal Computing to ensure continuity, especially following the original Roo Code team’s transition to new initiatives.
+
+---
+
+## 📜 License
+
+This project inherits and adapts the **Apache License 2.0** from the Roo Code base. See [LICENSE](LICENSE) for full details.
+
+Components derived from Microsoft Agent Framework follow their applicable licensing (MIT where noted).
+
+---
+
+## About KC Optimal Computing
+
+**KC Optimal Computing** is a Kansas City, Missouri startup building practical AI and automation solutions for local small businesses and residents.
+
+We focus on:
+- Open-source models and tools
+- Secure/private cloud or on-site custom server deployments
+- Training and interfaces designed for non-technical users
+- AI integration consulting that prioritizes real business outcomes
+
+**“We’re here to help KC. That’s the mission.”**
+
+Chroma Agentics embodies our philosophy: advanced agentic AI made accessible, private, maintainable, and genuinely useful for the Kansas City community. We believe in educating, building deep relationships, and accelerating local businesses through technology grounded in transparency and trust.
+
+Learn more about our work and how we can support your team:  
+[KC Optimal Computing](https://kcoptimal.com) (or reach out directly)
+
+---
+
+## 🙏 Acknowledgments & Credits
+
+- The original Roo Code team and the vibrant community of contributors who built an exceptional foundation.
+- Microsoft for the Agent Framework and continued investment in .NET AI tooling.
+- The PostgreSQL, Ollama, Next.js, and broader open-source communities.
+- Early testers, Kansas City developers, and business owners providing real-world feedback.
+
+---
+
+*Chroma Agentics — Agentic development, unlocked. Built for KC, by KC.*
+
+For support, feature requests, or to join upcoming KC AI community discussions, open an issue or connect with us. We’re here to help.
+
+---
+
+**Repository maintained with care by KC Optimal Computing LLC • Kansas City, Missouri**
+
+*This README was crafted following GitHub best practices for clarity, scannability, and usefulness. It accurately reflects the project’s technical foundation (Roo Code fork + Microsoft Agent Framework + C# + PostgreSQL + Ollama) and our mission of practical, trustworthy AI for Kansas City small businesses.*
