@@ -1,4 +1,4 @@
-# Code Generation Prompt: Phase 2 Sprint 2 — Durable Event Store + Resume/Replay
+# Implementation Prompt: Phase 2 Sprint 2 — Durable Event Store + Resume/Replay
 
 You are working in the Chroma Agentics repository.
 
@@ -6,9 +6,7 @@ Implement Phase 2 Sprint 2: Durable Event Store + Resume/Replay.
 
 This sprint extends the Sprint 1 backend foundation with PostgreSQL-backed protocol durability, event sequencing, session resume, replay, and cumulative ACK handling.
 
-Do not expand scope beyond Sprint 2. Do not implement systems planned for Phase 3 or beyond, such as real approval execution, extension bridge UI, Ollama chat adapters, pgvector/RAG, or full Microsoft Agent Framework workflows.
-
-`cancelled` may be documented as a future stretch goal only; do not implement cancellation behavior unless explicitly approved.
+Do not expand scope beyond Sprint 2. Do not implement systems planned for Phase 3 or beyond, such as real approval execution, extension bridge UI, Ollama chat adapters, pgvector/RAG, or full Microsoft Agent Framework workflows. Cancellation support is explicitly out of scope for Sprint 2; document it only as future stretch work.
 
 ---
 
@@ -20,61 +18,90 @@ Use:
 - `ChromaAgentics_TARGET_ARCHITECTURE_v1.6.md`
 - `docs/API_CONTRACT.md`
 - `docs/PHASE_02_SPRINT_01_REPORT.md`
+- `agents/phase-02-sprint-02-durable-event-store.agent.md`
 - existing Sprint 1 backend implementation
 
-The architecture requires:
+Preserve the architecture boundary:
 
-- local-first defaults
-- PostgreSQL-backed persistence
-- WebSocket protocol transport
-- localhost-first security
-- dev-token WebSocket auth
-- extension-side approval and action execution
-- backend-side durable protocol state
-
-The backend must not execute file edits, terminal commands, MCP actions, or approval decisions.
+- VS Code/Roo-derived extension owns UI, approvals, file edits, terminal execution, and MCP/tool execution.
+- Backend owns durable protocol state, WebSocket event streaming, session resume, replay, and future orchestration support.
+- Backend must not execute file edits, terminal commands, MCP actions, or approval decisions.
 
 ---
 
-## Sprint 1 Gate
+## Required First Step: Sprint 1 Gate
 
-Before implementing Sprint 2:
+Before editing, inspect and verify Sprint 1.
 
-1. Inspect Sprint 1 implementation.
-2. Confirm Sprint 1 backend builds.
-3. Confirm Sprint 1 tests pass.
-4. Confirm health endpoints still exist.
-5. Confirm `/ws/events` exists and enforces dev-token auth.
-6. Confirm `docker-compose.yml` and `.env.example` exist.
-7. Confirm Sprint 1 report exists.
+Confirm:
 
-If any Sprint 1 requirement is missing, stop and report blockers unless the issue is clearly non-blocking and documented.
+```text
+backend solution exists
+backend builds
+backend tests pass
+health endpoints exist
+/ws/events exists
+/ws/events requires dev-token auth
+.env.example exists
+docker-compose.yml exists
+docs/PHASE_02_SPRINT_01_REPORT.md exists
 
 Run or verify:
 
-```bash
 dotnet restore backend/ChromaAgentics.Backend.sln
 dotnet build backend/ChromaAgentics.Backend.sln
 dotnet test backend/ChromaAgentics.Backend.sln
 docker compose config
+
+If Sprint 1 is broken, stop and report blockers unless the issue is clearly non-blocking and documented.
+
+If the specified file paths do not exist or the repository uses a different backend layout, adapt only as needed to follow the existing backend conventions.
+
+Output a short Sprint 1 gate summary before implementation.
+
+Required Second Step: Repo Inspection
+
+Inspect and report:
+
+Sprint 1 backend structure
+existing health/config/WebSocket files
+existing protocol envelope types
+existing package versions
+existing Docker/PostgreSQL setup
+existing docs
+existing tests
+conflicts with this sprint plan
+
+Do not assume paths. Adapt only when the repo structure requires it.
+
 Sprint Goal
 
-Implement the smallest durable protocol slice:
+Implement the smallest durable protocol slice.
 
-EF Core PostgreSQL persistence.
-Minimal protocol-support schema.
-Transaction-safe event append.
-Monotonic per-workflow sequence numbers.
-Required message flows:
-- `workflow.start`: validate auth, envelope, protocol version, required IDs, and persist the start event.
-- `session.resume`: validate auth, restore last seen sequence, and resume the workflow stream.
-- `event.ack`: validate acknowledgements, update persisted last-seen sequence, and support replay progress.
-Ordered replay of events where sequence > lastSeenSequence.
-Idempotency handling.
-Safe structured error envelopes.
-Structured logs and minimal ActivitySource spans.
-Protocol 0.2 docs and starter JSON Schemas.
-Sprint 2 report.
+Architecture and scope:
+- preserve the extension/backend boundary
+- backend must not execute file edits, terminal commands, MCP actions, or approval decisions
+
+Persistence:
+- EF Core PostgreSQL persistence
+- minimal protocol-support schema
+- transaction-safe event append
+- monotonic per-workflow sequence numbers
+
+Protocol behavior:
+- workflow.start handling
+- session.resume handling
+- event.ack handling
+- ordered replay of events where sequence > lastSeenSequence
+- idempotency handling
+
+Observability and docs:
+- safe structured error envelopes
+- structured logs
+- minimal ActivitySource spans
+- protocol 0.2 docs
+- starter JSON Schema contract artifacts
+- Sprint 2 report
 
 Use:
 
@@ -82,28 +109,13 @@ protocolVersion = "0.2"
 
 Do not claim protocol 1.0.
 
-Required First Step: Inspect
-
-Before editing, inspect and report:
-
-Sprint 1 backend structure.
-Existing health/config/WebSocket files.
-Existing protocol envelope types.
-Existing package versions.
-Existing Docker/PostgreSQL setup.
-Existing docs.
-Existing tests.
-Conflicts with this sprint plan.
-
-Then implement.
-
-Required Package Pins
+Package Policy
 
 Target net8.0.
 
-Pin all new packages exactly. Use compatible latest stable versions only if these exact versions are unavailable, and document the reason.
+Pin all new packages exactly. Preserve Sprint 1 package pins unless there is a documented compatibility reason to change them.
 
-Required EF/PostgreSQL packages:
+Add EF/PostgreSQL packages:
 
 Microsoft.EntityFrameworkCore
 Microsoft.EntityFrameworkCore.Design
@@ -113,20 +125,73 @@ Preferred integration test package:
 
 Testcontainers.PostgreSql
 
-Also preserve Sprint 1 package pins unless there is a documented compatibility reason to change them.
+If Testcontainers is not practical, document the fallback:
 
-Document all package versions in:
+Docker Compose PostgreSQL
+configured local PostgreSQL
+
+Document all final package versions in:
 
 docs/PHASE_02_SPRINT_02_REPORT.md
+Required File Targets
+
+Create or update files under the existing backend structure. Use these targets unless repo conventions require adjustment:
+
+backend/src/ChromaAgentics.Backend/
+  Persistence/
+    ChromaAgenticsDbContext.cs
+    Entities/
+      Workspace.cs
+      WorkflowExecution.cs
+      WorkflowSession.cs
+      ExecutionEvent.cs
+      EventAcknowledgement.cs
+    Migrations/
+  Events/
+    IEventStore.cs
+    PostgresEventStore.cs
+  Acknowledgements/
+    IAcknowledgementStore.cs
+    PostgresAcknowledgementStore.cs
+  Protocol/
+    IWorkflowProtocolService.cs
+    WorkflowProtocolService.cs
+    IProtocolMessageValidator.cs
+    ProtocolMessageValidator.cs
+    ProtocolErrorFactory.cs
+    ProtocolEnvelope.cs
+    ProtocolEventNames.cs
+  Observability/
+    ProtocolActivitySource.cs
+  Streaming/
+    EventStreamEndpoint.cs
+
+backend/tests/ChromaAgentics.Backend.Tests/
+  Persistence/
+  Events/
+  Acknowledgements/
+  Protocol/
+  Streaming/
+
+docs/
+  API_CONTRACT.md
+  GETTING_STARTED_BACKEND.md
+  PHASE_02_SPRINT_02_REPORT.md
+  schemas/protocol/v0.2/
+    envelope.schema.json
+    workflow-start.schema.json
+    session-resume.schema.json
+    event-ack.schema.json
+    error-envelope.schema.json
+
+Optional but recommended:
+
+docs/ADRs/ADR-0001-phase-2-protocol-support-tables.md
 Required Data Model
 
 Add EF Core entities and migrations for these Phase 2 protocol-support tables.
 
-Core protocol-support entities:
-- `Workspaces`, `WorkflowExecutions`, `WorkflowSessions`, `ExecutionEvents`, and `EventAcknowledgements` support durable event streams, replay, and resume.
-- These tables extend the target architecture for WebSocket durability and replay without replacing the long-term application schema.
-
-WorkflowSessions and EventAcknowledgements are protocol-support tables used only for durability and replay state. Keep Sprint 2 scope limited to protocol durability support.
+WorkflowSessions and EventAcknowledgements are protocol-support tables. They extend the target architecture for WebSocket durability and replay. They do not replace the long-term schema.
 
 Workspaces
 Id uuid primary key
@@ -205,17 +270,15 @@ index (WorkspaceId)
 index (IdempotencyKey)
 index (CreatedAtUtc)
 
-If filtered unique indexes are awkward in EF Core/Npgsql, implement the closest safe equivalent and document it.
+If EF Core/Npgsql makes a filtered unique index awkward, implement the closest safe equivalent and document the tradeoff.
 
 Migration Requirements
 
-Create one initial Sprint 2 migration for protocol-support persistence.
+Create one Sprint 2 migration for protocol-support persistence.
 
 Preferred migration name:
 
 Sprint02ProtocolSupport
-
-Document exact migration commands used.
 
 Expected command shape:
 
@@ -224,7 +287,19 @@ dotnet ef database update --project backend/src/ChromaAgentics.Backend --startup
 
 Adjust paths only if repo structure requires it.
 
-Migration must create only Sprint 2 protocol-support tables. Do not add RAG, pgvector, provider config, tool calls, patch sets, or approval execution tables unless explicitly marked as future placeholders and not wired.
+Migration must create only Sprint 2 protocol-support tables.
+
+Do not add:
+
+RAG tables
+pgvector retrieval tables
+embedding tables
+provider config tables
+tool-call execution tables
+patch-set execution tables
+approval execution tables
+
+Contract placeholders are allowed only when clearly marked future-facing and not wired into runtime behavior.
 
 Transaction-Safe Event Append
 
@@ -235,7 +310,7 @@ WorkflowExecutions.NextSequence
 Append algorithm:
 
 1. Begin database transaction.
-2. Lock WorkflowExecutions row for the workflow.
+2. Lock the WorkflowExecutions row.
 3. Read NextSequence.
 4. Assign that value to ExecutionEvents.Sequence.
 5. Increment WorkflowExecutions.NextSequence.
@@ -248,11 +323,11 @@ Use unique (WorkflowId, Sequence) plus retry-on-conflict.
 
 Document which strategy was implemented.
 
-Sequence must be:
+Sequence numbers must be:
 
 monotonic per workflow
 unique per workflow
-stable after persistence
+stable once persisted
 used for replay ordering
 Required Services
 
@@ -327,31 +402,27 @@ workflow.started
 workflow.status
 error
 
-Replayed events should be sent with their original event names and original sequence numbers.
+Replayed events must be sent using their original event names and original sequence numbers.
 
 Do not persist synthetic replay events.
 
-Optional non-durable message after replay:
-
-workflow.status
-
-Only use `event.replayed` as a non-durable replay annotation during live replay delivery. Do not write `event.replayed` into durable storage, and document its non-durable behavior clearly. Prefer not to use it.
+Avoid event.replayed unless it is explicitly non-durable and documented. Prefer original event replay.
 
 workflow.start
 
-Required behavior:
+When handling workflow.start:
 
-Validate dev token.
-Validate envelope.
-Validate protocol version 0.2.
-Validate required IDs.
-Create workspace only if explicitly documented.
-Create workflow execution.
-Create workflow session if missing.
-Append workflow.started.
-Append workflow.status.
-Emit persisted events to client.
-Preserve idempotency.
+validate dev token
+validate envelope
+validate protocolVersion = 0.2
+validate required IDs
+create workspace only if explicitly documented
+create workflow execution
+create workflow session if missing
+append workflow.started
+append workflow.status
+emit persisted events to client
+enforce idempotency
 
 Payload:
 
@@ -361,7 +432,7 @@ Payload:
   "source": "manual-smoke-test"
 }
 
-Idempotent retry behavior:
+Idempotency rules:
 
 same workflow/message type/idempotency key + same payload hash:
 return same workflowId and previously persisted workflow.started/workflow.status events
@@ -373,17 +444,23 @@ missing idempotency key:
 allowed, but no duplicate protection
 session.resume
 
-Required behavior:
+When handling session.resume:
 
-Validate dev token.
-Validate workflow/session.
-Read lastSeenSequence.
-If lastSeenSequence = 0, replay all workflow events.
-If middle sequence, replay events where sequence > lastSeenSequence.
-If latest sequence, replay no prior events and return documented status.
-If future sequence, return future_sequence error.
+validate dev token
+validate workflow/session
+read lastSeenSequence
+
+Then act according to `lastSeenSequence`:
+
+| lastSeenSequence | action |
+|---|---|
+| `0` | replay all persisted workflow events |
+| between first and latest | replay persisted events where `sequence > lastSeenSequence` |
+| equal latest | emit a documented resume status with no prior events |
+| greater than latest | return `future_sequence` error |
+
 Preserve ascending sequence order.
-Do not create new ExecutionEvents for replayed events.
+Do not create new `ExecutionEvents` for replayed events.
 
 Payload:
 
@@ -392,15 +469,15 @@ Payload:
 }
 event.ack
 
-Required behavior:
+When handling event.ack:
 
-Validate workflow/session.
-Get current max workflow sequence.
-Reject lastSeenSequence > maxSequence with future_ack.
-If lastSeenSequence <= currentAck, no-op.
-If lastSeenSequence > currentAck, update ACK state.
-Emit safe status or no response, but document chosen behavior.
-Do not create a durable event unless explicitly justified and documented.
+validate workflow/session
+get current max workflow sequence
+reject lastSeenSequence > maxSequence with future_ack
+if lastSeenSequence <= currentAck, no-op
+if lastSeenSequence > currentAck, update ACK state
+emit safe status or no response, but document chosen behavior
+do not create a durable event unless explicitly justified and documented
 
 Payload:
 
@@ -420,9 +497,11 @@ file edit execution
 terminal execution
 tool execution
 MCP execution
-Error Envelope
+Error Handling
 
-All recoverable protocol errors return:
+All recoverable protocol errors must return a safe error envelope.
+
+Error envelope shape:
 
 {
   "protocolVersion": "0.2",
@@ -458,7 +537,7 @@ workflow_cancelled
 unauthorized
 internal_error
 
-Errors must not include:
+Error payloads must not contain:
 
 tokens
 connection strings
@@ -466,18 +545,18 @@ passwords
 raw prompts
 provider keys
 raw stack traces
-full payload contents
+full payload bodies
 raw upstream responses
 Security Rules
 
-Preserve Sprint 1 security:
+Preserve Sprint 1 security behavior:
 
 localhost-first binding
 CHROMA_ALLOW_LAN_BINDING required for non-loopback host
 X-Chroma-Dev-Token required for WebSocket auth
 query-string devToken allowed only for documented smoke testing if Sprint 1 already allowed it
 no broad CORS
-no secrets in logs/responses/errors
+no secrets in logs, responses, or errors
 
 Do not log:
 
@@ -528,7 +607,7 @@ No external telemetry exporter is required in Sprint 2.
 
 JSON Schema / Contract Artifacts
 
-Create starter schema files for protocol 0.2:
+Create starter JSON Schema files for protocol 0.2:
 
 docs/schemas/protocol/v0.2/envelope.schema.json
 docs/schemas/protocol/v0.2/workflow-start.schema.json
@@ -538,16 +617,16 @@ docs/schemas/protocol/v0.2/error-envelope.schema.json
 
 Schemas must match implemented behavior.
 
-Test Strategy
+Tests
 
 Split tests into:
 
-Unit tests
-Integration tests
+unit tests
+integration tests
 WebSocket contract tests
-Manual smoke tests
+manual smoke tests
 
-Preferred integration approach:
+Preferred integration strategy:
 
 Testcontainers PostgreSQL
 
@@ -593,15 +672,6 @@ duplicate idempotency key
 idempotency conflict with changed payload
 duplicate/lower ACK no-op
 future ACK error
-Manual smoke tests must cover
-docker compose up --build
-health endpoints still work
-WebSocket connect with X-Chroma-Dev-Token
-workflow.start
-event.ack
-disconnect/reconnect
-session.resume
-ordered replay verification
 Documentation Requirements
 
 Update:
@@ -618,7 +688,7 @@ Optional but recommended:
 
 docs/ADRs/ADR-0001-phase-2-protocol-support-tables.md
 
-docs/API_CONTRACT.md must include:
+docs/API_CONTRACT.md must document:
 
 protocol version 0.2
 implemented inbound messages
@@ -692,8 +762,6 @@ If safe:
 
 docker compose up --build
 
-If PostgreSQL or another required dependency is unavailable, record the startup failure and verify the backend reports the dependency issue gracefully rather than crashing.
-
 Manual smoke:
 
 curl http://localhost:5127/health/live
@@ -702,48 +770,46 @@ curl http://localhost:5127/health/dependencies
 
 Also run a WebSocket smoke test that:
 
-connects with valid X-Chroma-Dev-Token
-sends workflow.start
-receives persisted workflow events
-sends event.ack
-disconnects
-reconnects
-sends session.resume
-verifies missed events replay in order
+1. connects with valid X-Chroma-Dev-Token
+2. sends workflow.start
+3. receives persisted workflow events
+4. sends event.ack
+5. disconnects
+6. reconnects
+7. sends session.resume
+8. verifies missed events replay in order
 
 Report exact command outputs or summarized key lines.
 
-Hard Constraints
+Explicitly Out of Scope
 
 Do not implement:
 
-MAF workflows
-Ollama chat
-model discovery
-model streaming
-RAG
-pgvector retrieval
-approval execution
+Microsoft Agent Framework workflows
+real agent planning
+approval request execution
+approval decision execution
 file edit execution
-terminal execution
-MCP execution
-extension UI
-Next.js
+terminal command execution
+MCP tool execution
+Ollama chat adapter
+Ollama model discovery
+model.stream
+pgvector extension setup
+RAG ingestion
+RAG retrieval
+embeddings
+Next.js dashboard
 LangGraph
 n8n
-cloud providers
-production auth
+cloud provider adapters
+production authentication
 multi-user authorization
+full VS Code extension UI integration
 Phase 2 completion claim
 
-Do not falsely claim:
+Contract placeholders are allowed only when clearly labeled as future-facing.
 
-protocol 1.0 complete
-extension bridge complete
-approval flow complete
-durable orchestration complete
-RAG complete
-Ollama provider complete
 Definition of Done
 
 Sprint 2 is complete only when:
@@ -772,9 +838,9 @@ deferred features are not falsely claimed
 Stretch complete only if:
 
 workflow.cancel works, is idempotent, documented, and tested
-Final Output Format
+Required Final Report
 
-When complete, output:
+End your work with a concise report:
 
 Summary
 Sprint 1 gate result
@@ -793,5 +859,5 @@ Known gaps
 Stretch work status
 Next sprint recommendation
 
-Be honest. Durable protocol correctness matters more than an impressive-looking pile of half-working code.
+Be honest. Durable protocol correctness matters more than a shiny pile of half-working code.
 ```
