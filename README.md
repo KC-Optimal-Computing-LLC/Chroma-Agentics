@@ -133,7 +133,7 @@ This architecture keeps sensitive work local and private while giving teams powe
    ollama serve
 
    # Terminal 3: (Optional) Frontend
-   cd frontend && npm install && npm run dev
+   cd frontend && pnpm install && pnpm dev
    ```
 
 6. **Launch the Extension**
