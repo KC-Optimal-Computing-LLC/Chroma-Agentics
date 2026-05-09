@@ -1,222 +1,255 @@
 # Chroma Agentics
 
-> **Unlocking agentic power for developers and teams — inspired by the empowering force of Chroma.**
+Chroma Agentics is an independent fork and planned evolution of Roo Code, focused on local-first, orchestrated AI development workflows.
 
-**Chroma Agentics** is a community-driven fork and thoughtful evolution of [Roo Code](https://github.com/RooCodeInc/Roo-Code), the powerful VS Code extension that brings a complete AI development team directly into your editor. 
+The project aims to preserve Roo Code’s VS Code agent experience while adding:
 
-We’ve integrated the production-ready **Microsoft Agent Framework** for sophisticated multi-agent orchestration, a high-performance **C# backend** for reliability and speed, **PostgreSQL** for persistent agent state, long-term memory, and Retrieval-Augmented Generation (RAG), and **Ollama** for private, local-first model inference.
+- A C#/.NET backend service for durable agent execution
+- Microsoft Agent Framework 1.0+ for multi-agent orchestration
+- PostgreSQL and pgvector for persistent state, memory, and retrieval-augmented generation
+- Ollama support for private local model inference
+- Optional Next.js dashboards for team and small-business workflows
 
-Named after the mystical “Chroma” energy in the classic 2005 adventure game *Indigo Prophecy* (released as *Fahrenheit* in Europe), Chroma Agentics represents the unlocking of intelligent, collaborative agentic workflows — while remaining grounded in open-source values, privacy, and real-world practicality.
+Chroma Agentics is maintained by KC Optimal Computing LLC as part of a broader mission to make practical, private, open-source AI tooling accessible to Kansas City developers and small businesses.
 
-**Maintained with support from KC Optimal Computing** — *We’re here to help KC.*
+---
+
+## Project Status
+
+**Chroma Agentics is currently in early development.**
+
+This README describes the intended architecture and development direction. Many components are planned or in progress. Features listed below may not yet be available in the repository.
+
+Current status (as of May 2026):
+
+- [x] Roo Code fork baseline (extension layer preserved)
+- [ ] C#/.NET backend service shell
+- [ ] Ollama provider adapter + streaming
+- [ ] PostgreSQL schema + migrations
+- [ ] pgvector RAG indexing pipeline
+- [ ] Microsoft Agent Framework 1.0+ orchestration integration
+- [ ] Extension ↔ Backend API bridge (HTTP/WebSocket)
+- [ ] Optional Next.js web dashboard (roadmap)
+
+We will update this status as work progresses. Check the repository issues and commits for the latest implementation state.
+
+---
+
+## Fork Notice
+
+Chroma Agentics is an independent fork and derivative work of Roo Code. It is not officially affiliated with, endorsed by, or sponsored by Roo Code or its original maintainers unless explicitly stated.
+
+- Original Roo Code copyright, license notices, and attribution are preserved in accordance with the Apache License 2.0.
+- Chroma Agentics-specific modifications, additions, and branding are maintained by KC Optimal Computing LLC and its contributors.
+- All derivative work requirements under Apache 2.0 (license inclusion, NOTICE preservation, marking of changes) are followed.
+
+If you are a contributor to the original Roo Code project and have concerns about attribution or usage, please open an issue — we take compliance seriously.
 
 ---
 
 ## Why Chroma Agentics?
 
-Modern development demands more than simple autocomplete or chat. Teams need reliable, orchestratable AI agents that can plan, execute, remember, and collaborate — all while keeping data private and systems maintainable.
+Roo Code already delivers a strong in-editor AI agent experience. The goal of this fork is to extend that experience with production-oriented backend capabilities that many teams need as they move from experimentation to real workflows:
 
-Chroma Agentics delivers:
+- Durable, stateful agent execution outside the editor process
+- Structured multi-agent orchestration patterns
+- Persistent memory and retrieval over codebases and documents
+- Local-first operation that respects data sovereignty
 
-- The proven, loved Roo Code editor experience (modes, checkpoints, codebase awareness)
-- Enterprise-grade multi-agent orchestration via Microsoft Agent Framework
-- A robust C# service layer built for performance and integration
-- Persistent, queryable memory and RAG powered by PostgreSQL
-- True local/private operation with Ollama (no forced cloud lock-in)
-- Accessibility for both experienced developers and non-technical KC small business teams
-
-This project exists to accelerate Kansas City small businesses and developers with trustworthy, transparent, open-source AI tools — not hype.
+This direction aligns with KC Optimal Computing’s focus on practical tools that Kansas City small businesses and developers can actually run and maintain.
 
 ---
 
-## ✨ Key Features
+## Key Features (Intended)
 
-### From the Roo Code Foundation (Preserved & Enhanced)
-- **Specialized Agent Modes**: Code, Architect, Ask, Debug, Test, Custom, and Orchestrator
-- **Natural Language Code Generation & Refactoring**
-- **Deep Codebase Understanding** with semantic search and context
-- **Checkpoint Navigation** — step back through agent actions
-- **MCP Server Integration** and terminal command execution (with approval)
-- **Granular Control** — approve file changes and commands
+### Preserved from Roo Code
+- Specialized modes (Code, Architect, Ask, Debug, Custom, Orchestrator)
+- Natural language code generation, refactoring, and codebase Q&A
+- Checkpoint navigation and granular approval flows
+- MCP server integration and terminal tooling (with user approval)
+- Webview UI and configuration system
 
-### New in Chroma Agentics
-- **Microsoft Agent Framework Orchestration** — Native C#/.NET support for sequential, concurrent, handoff, and group collaboration workflows with checkpointing and human-in-the-loop
-- **High-Performance C# Backend** — Reliable service layer for agent execution, state management, and API bridging
-- **PostgreSQL Persistence & RAG** — Long-term agent memory, conversation history, and powerful retrieval over codebases and documents
-- **Private by Default with Ollama** — Run powerful open models locally or on your own infrastructure
-- **Optional Next.js Web Layer** — Dashboards and interfaces for teams or non-VS Code users
-- **Observability & Durability** — Built with patterns from Microsoft Agent Framework (OpenTelemetry-ready, durable workflows)
-
-### Designed for KC Small Business Reality
-- On-site server deployment options
-- Training paths and documentation for non-technical users
-- Focus on trust, transparency, and practical outcomes over flashy demos
-- Community education and long-term relationship building
+### Planned Additions
+- Microsoft Agent Framework 1.0+ orchestration (sequential, concurrent, handoff, group collaboration workflows)
+- C#/.NET backend service for durable execution and state management
+- PostgreSQL + pgvector for conversation state, agent memory, and RAG
+- Ollama-first local inference with support for other providers
+- Optional Next.js layer for dashboards and non-editor interfaces
 
 ---
 
-## 🏗️ Architecture Overview
+## Architecture (Planned)
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    VS Code Extension                         │
-│              (Roo Code Fork — Editor Integration)            │
-│   Modes • Checkpoints • File Ops • Terminal • MCP Servers   │
-└───────────────────────────┬─────────────────────────────────┘
-                            │ Feature API / HTTP + WebSocket
-                            ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    C# Backend Service                        │
-│   • Microsoft Agent Framework Orchestration (multi-agent)   │
-│   • Workflow patterns: Sequential • Concurrent • Handoff    │
-│   • PostgreSQL (State, Memory, pgvector RAG)                │
-│   • Observability & Durable Execution                       │
-└───────────────────────────┬─────────────────────────────────┘
-                            │
-            ┌───────────────┴───────────────┐
-            ▼                               ▼
-┌──────────────────────┐      ┌──────────────────────────────┐
-│   Ollama (Local)     │      │   Optional: Next.js Frontend │
-│   Private Inference  │      │   Dashboards • Team UI       │
-└──────────────────────┘      └──────────────────────────────┘
+VS Code Extension (Roo fork)
+          │
+          ▼  (Extension Bridge API — HTTP / WebSocket)
+C# Backend Service
+  ├── Microsoft Agent Framework 1.0+ (Workflow Engine)
+  ├── PostgreSQL (state, checkpoints, pgvector embeddings)
+  └── Model Provider Layer
+          │
+          ▼
+Ollama (default local)  |  Other providers (configurable)
 ```
 
-This architecture keeps sensitive work local and private while giving teams powerful orchestration tools.
+Integration boundaries that still need definition and implementation:
+- Extension ↔ Backend communication protocol and auth model
+- How file/terminal actions remain under user control
+- RAG chunking, embedding model, and retrieval strategy
+- Model provider abstraction and capability detection
 
 ---
 
-## 🚀 Getting Started
+## Security & Privacy Model
 
-### Prerequisites
-- Visual Studio Code (or compatible editor supporting VS Code extensions)
-- [.NET SDK](https://dotnet.microsoft.com/download) (8.0+ recommended)
-- [PostgreSQL](https://www.postgresql.org/) (with pgvector extension recommended for RAG)
-- [Ollama](https://ollama.com/) (for local models)
-- Node.js 18+ and pnpm (for extension and optional frontend development)
+Chroma Agentics is designed with a local-first default.
 
-### Development Setup
+**Default privacy posture:**
+- Local model inference via Ollama when configured
+- Local PostgreSQL for state and memory
+- No mandatory cloud model providers
+- Human-in-the-loop approval for file changes and terminal commands (inherited from Roo Code)
+- Clear separation between extension UI, backend orchestration, and persistent storage
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/KC-optimal-computing-llc/ChromaAgentics.git
-   cd ChromaAgentics
-   ```
+**Important limitations:**
+- Privacy guarantees depend on the model providers you enable. Cloud providers will receive prompts if used.
+- Logs, traces, embeddings, and database records may contain sensitive code or business information.
+- Users are responsible for securing PostgreSQL instances, backend ports, and Ollama endpoints.
+- The backend service will expose APIs; network exposure should be limited to localhost or properly authenticated/trusted networks in production.
 
-2. **Extension Layer (Roo Code base)**
-   ```bash
-   pnpm install
-   # Build VSIX or run in development mode (F5 in VS Code)
-   ```
-
-3. **C# Backend Service**
-   ```bash
-   cd backend
-   dotnet restore
-   dotnet build
-   
-   # Configure your environment (appsettings.json or .env)
-   # - PostgreSQL connection string
-   # - Ollama base URL (default: http://localhost:11434)
-   ```
-
-4. **Database Setup**
-   - Create PostgreSQL database
-   - Run provided migration scripts (see `/db` or `docs/migrations.md`)
-   - Enable pgvector extension if using advanced RAG
-
-5. **Start the Stack**
-   ```bash
-   # Terminal 1: C# Backend
-   cd backend && dotnet run
-
-   # Terminal 2: Ollama
-   ollama serve
-
-   # Terminal 3: (Optional) Frontend
-   cd frontend && pnpm install && pnpm dev
-   ```
-
-6. **Launch the Extension**
-   - Open the project in VS Code
-   - Press `F5` to launch a development host with the extension loaded
-   - Or build and install the VSIX package
-
-For detailed, step-by-step instructions tailored to different environments (including on-site server setups), see the **[Getting Started Guide](docs/GETTING_STARTED.md)** (coming soon in this repository).
+A more detailed threat model and hardening guide will be added as the backend implementation matures.
 
 ---
 
-## 🛠️ Tech Stack
+## Getting Started
 
-| Layer              | Technology                          | Purpose                              |
-|--------------------|-------------------------------------|--------------------------------------|
-| Editor Integration | TypeScript, VS Code APIs, pnpm     | Roo Code fork — familiar UX         |
-| Orchestration      | Microsoft Agent Framework (.NET)   | Multi-agent workflows, patterns     |
-| Backend            | C# / .NET 8+, ASP.NET Core         | Performance, reliability, bridging  |
-| Persistence & RAG  | PostgreSQL + pgvector              | State, memory, intelligent retrieval|
-| Inference          | Ollama (pluggable)                 | Private, local open-source models   |
-| Optional Frontend  | Next.js, React, TypeScript         | Web dashboards & team interfaces    |
-| Observability      | OpenTelemetry (via MAF patterns)   | Tracing, monitoring, debugging      |
+Because the project is in early development, we offer two realistic paths.
 
-We prioritize open-source components and local execution to maximize privacy and control for KC businesses.
+### Option A: Work on the Roo Code Extension Layer Only
+
+If you only want to modify the VS Code extension (branding, modes, UI, etc.):
+
+```bash
+git clone https://github.com/KC-optimal-computing-llc/ChromaAgentics.git
+cd ChromaAgentics
+pnpm install
+# Follow original Roo Code development instructions (F5 in VS Code, etc.)
+```
+
+### Option B: Full Stack (Backend + Services) — Work in Progress
+
+The backend, database, and orchestration layers are still being built. Current steps are exploratory:
+
+1. Clone the repository
+2. Set up PostgreSQL (docker compose or local)
+3. Configure environment (see `.env.example` — will be added)
+4. Build and run the C# backend shell
+5. Run Ollama and pull base models
+6. Test extension-to-backend connectivity (once the bridge exists)
+
+We will publish a working `docker-compose.yml`, `.env.example`, and step-by-step guide once the backend shell and database migrations are in the repository.
+
+**Do not expect a one-command “it just works” experience today.** This is an active development repository.
 
 ---
 
-## 🤝 Contributing
+## Tech Stack (Planned)
 
-Chroma Agentics thrives on community input. Whether you’re fixing bugs, improving documentation, adding features, or providing feedback from real KC business use cases — your contributions matter.
+| Layer                  | Technology                              | Status      |
+|------------------------|-----------------------------------------|-------------|
+| Editor Integration     | TypeScript, VS Code APIs, pnpm         | Inherited from Roo Code |
+| Orchestration          | Microsoft Agent Framework 1.0+ (.NET)  | Planned     |
+| Backend                | C# / .NET 8+                           | Planned     |
+| Persistence & RAG      | PostgreSQL + pgvector                  | Planned     |
+| Inference              | Ollama (primary), pluggable providers  | Planned     |
+| Optional Web Layer     | Next.js / React                        | Roadmap     |
+| Observability          | OpenTelemetry patterns                 | Planned     |
+
+---
+
+## Roadmap
+
+### Phase 1: Fork & Baseline (Current focus)
+- Preserve Roo Code extension functionality and build process
+- Update branding, metadata, and extension identity
+- Add Fork Notice and license compliance documentation
+- Establish contribution and code of conduct processes
+
+### Phase 2: Backend Foundation
+- C#/.NET backend service skeleton
+- Extension ↔ Backend API definition (HTTP/WebSocket)
+- Basic streaming of agent events
+- Local development auth/binding
+
+### Phase 3: Model Provider Layer
+- Ollama chat adapter with streaming
+- Local model discovery and capability metadata
+- Provider abstraction for future cloud adapters
+
+### Phase 4: Persistence & Memory
+- PostgreSQL schema and Entity Framework migrations
+- Conversation and agent state storage
+- pgvector embeddings table and basic retrieval pipeline
+
+### Phase 5: Microsoft Agent Framework Integration
+- Sequential and concurrent workflow support
+- Handoff and group collaboration patterns
+- Human-in-the-loop checkpoints
+- Durable execution where appropriate
+
+### Phase 6: Team & Business Layer (Later)
+- Optional Next.js dashboard
+- Basic admin / audit views
+- Documentation and deployment guides aimed at KC small business teams
+
+---
+
+## Contributing
+
+We welcome developers who want to work on a real, local-first agent platform rather than another wrapper around hosted models.
 
 Please read:
-- [CONTRIBUTING.md](CONTRIBUTING.md)
-- [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+- [CONTRIBUTING.md](CONTRIBUTING.md) (to be added)
+- [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) (to be added)
 
-We follow a transparent, respectful process aligned with KC Optimal Computing’s values of trust and long-term community building.
-
-This project is maintained with active support from KC Optimal Computing to ensure continuity, especially following the original Roo Code team’s transition to new initiatives.
+We especially value contributions that improve documentation, add tests, clarify integration boundaries, or help make the system easier for smaller teams to run on their own infrastructure.
 
 ---
 
-## 📜 License
+## License & Attribution
 
-This project inherits and adapts the **Apache License 2.0** from the Roo Code base. See [LICENSE](LICENSE) for full details.
+This project is licensed under the Apache License 2.0, inherited from the Roo Code base.
 
-Components derived from Microsoft Agent Framework follow their applicable licensing (MIT where noted).
+See [LICENSE](LICENSE) for the full text.
+
+We follow Apache 2.0 requirements for derivative works: preserving original notices, including the license, and clearly marking our own modifications.
 
 ---
 
 ## About KC Optimal Computing
 
-**KC Optimal Computing** is a Kansas City, Missouri startup building practical AI and automation solutions for local small businesses and residents.
+KC Optimal Computing is a Kansas City, Missouri company building practical AI and automation tools for local small businesses and developers.
 
-We focus on:
-- Open-source models and tools
-- Secure/private cloud or on-site custom server deployments
-- Training and interfaces designed for non-technical users
-- AI integration consulting that prioritizes real business outcomes
+Our focus is on open-source models, private/local deployment options (on-site servers or secure cloud), and interfaces that non-technical users can actually use after reasonable training.
 
-**“We’re here to help KC. That’s the mission.”**
+Chroma Agentics is one expression of that mission: extending a strong existing tool (Roo Code) with the backend capabilities needed for more serious workflows, while keeping control in the hands of the people running it.
 
-Chroma Agentics embodies our philosophy: advanced agentic AI made accessible, private, maintainable, and genuinely useful for the Kansas City community. We believe in educating, building deep relationships, and accelerating local businesses through technology grounded in transparency and trust.
+"We're here to help KC. That's the mission."
 
-Learn more about our work and how we can support your team:  
-[KC Optimal Computing](https://kcoptimal.com) (or reach out directly)
+More about our work: https://kcoptimal.com (or contact us directly).
 
 ---
 
-## 🙏 Acknowledgments & Credits
+## Acknowledgments
 
-- The original Roo Code team and the vibrant community of contributors who built an exceptional foundation.
-- Microsoft for the Agent Framework and continued investment in .NET AI tooling.
-- The PostgreSQL, Ollama, Next.js, and broader open-source communities.
-- Early testers, Kansas City developers, and business owners providing real-world feedback.
-
----
-
-*Chroma Agentics — Agentic development, unlocked. Built for KC, by KC.*
-
-For support, feature requests, or to join upcoming KC AI community discussions, open an issue or connect with us. We’re here to help.
+- The Roo Code team and community for building a genuinely useful in-editor agent platform and open-sourcing it.
+- Microsoft for Microsoft Agent Framework and continued .NET AI investment.
+- The PostgreSQL, pgvector, Ollama, and Next.js communities.
+- Early reviewers and contributors who help keep this honest and buildable.
 
 ---
 
-**Repository maintained with care by KC Optimal Computing LLC • Kansas City, Missouri**
+*Chroma Agentics — Building a credible, local-first agentic development platform on top of a proven foundation.*
 
-*This README was crafted following GitHub best practices for clarity, scannability, and usefulness. It accurately reflects the project’s technical foundation (Roo Code fork + Microsoft Agent Framework + C# + PostgreSQL + Ollama) and our mission of practical, trustworthy AI for Kansas City small businesses.*
+For questions, issues, or to get involved in the Kansas City AI tooling community, open an issue or reach out. We’re here to help.
