@@ -1,0 +1,61 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://chroma-agentics.local/schemas/protocol/v0.2/envelope.schema.json",
+	"title": "Chroma Agentics Protocol 0.2 Envelope",
+	"type": "object",
+	"additionalProperties": false,
+	"required": [
+		"protocolVersion",
+		"messageId",
+		"workspaceId",
+		"workflowId",
+		"sessionId",
+		"sequence",
+		"name",
+		"timestamp",
+		"payload"
+	],
+	"properties": {
+		"protocolVersion": {
+			"const": "0.2"
+		},
+		"messageId": {
+			"type": "string",
+			"format": "uuid"
+		},
+		"workspaceId": {
+			"type": ["string", "null"],
+			"format": "uuid"
+		},
+		"workflowId": {
+			"type": ["string", "null"],
+			"format": "uuid"
+		},
+		"sessionId": {
+			"type": ["string", "null"],
+			"format": "uuid"
+		},
+		"sequence": {
+			"type": ["integer", "null"],
+			"minimum": 1
+		},
+		"name": {
+			"type": "string"
+		},
+		"correlationId": {
+			"type": ["string", "null"],
+			"format": "uuid"
+		},
+		"idempotencyKey": {
+			"type": ["string", "null"],
+			"minLength": 1
+		},
+		"timestamp": {
+			"type": "string",
+			"format": "date-time"
+		},
+		"payload": {
+			"type": "object"
+		}
+	}
+}

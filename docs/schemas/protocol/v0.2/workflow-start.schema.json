@@ -1,0 +1,65 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://chroma-agentics.local/schemas/protocol/v0.2/workflow-start.schema.json",
+	"title": "workflow.start",
+	"allOf": [
+		{
+			"$ref": "envelope.schema.json"
+		},
+		{
+			"type": "object",
+			"required": [
+				"protocolVersion",
+				"messageId",
+				"workspaceId",
+				"workflowId",
+				"sessionId",
+				"sequence",
+				"name",
+				"timestamp",
+				"payload"
+			],
+			"properties": {
+				"protocolVersion": {
+					"const": "0.2"
+				},
+				"workspaceId": {
+					"type": "string",
+					"format": "uuid"
+				},
+				"workflowId": {
+					"type": "string",
+					"format": "uuid"
+				},
+				"sessionId": {
+					"type": "string",
+					"format": "uuid"
+				},
+				"sequence": {
+					"type": "null"
+				},
+				"name": {
+					"const": "workflow.start"
+				},
+				"payload": {
+					"type": "object",
+					"additionalProperties": true,
+					"properties": {
+						"title": {
+							"type": "string"
+						},
+						"mode": {
+							"type": "string"
+						},
+						"source": {
+							"type": "string"
+						},
+						"clientName": {
+							"type": "string"
+						}
+					}
+				}
+			}
+		}
+	]
+}

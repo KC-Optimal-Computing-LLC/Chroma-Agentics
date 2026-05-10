@@ -1,7 +1,9 @@
 using ChromaAgentics.Backend.Configuration;
 using ChromaAgentics.Backend.Health;
+using ChromaAgentics.Backend.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -54,6 +56,8 @@ internal sealed class TestBackendFactory : WebApplicationFactory<Program>
             services.RemoveAll<TimeProvider>();
             services.RemoveAll<BackendOptions>();
             services.RemoveAll<DependencyOptions>();
+            services.RemoveAll<DbContextOptions<ChromaAgenticsDbContext>>();
+            services.RemoveAll<ChromaAgenticsDbContext>();
 
             var testConfiguration = new ConfigurationBuilder()
                 .AddInMemoryCollection(configuration)
@@ -64,6 +68,10 @@ internal sealed class TestBackendFactory : WebApplicationFactory<Program>
             services.AddSingleton(timeProvider);
             services.AddSingleton(BackendOptions.FromConfiguration(testConfiguration));
             services.AddSingleton(DependencyOptions.FromConfiguration(testConfiguration));
+            services.AddDbContext<ChromaAgenticsDbContext>(options =>
+            {
+                options.UseNpgsql(configuration["CHROMA_DATABASE_CONNECTION_STRING"]);
+            });
         });
     }
 

@@ -25,6 +25,13 @@
 	"command.terminal.explainCommand.title": "Explain This Command",
 	"command.acceptInput.title": "Accept Input/Suggestion",
 	"command.toggleAutoApprove.title": "Toggle Auto-Approve",
+	"command.chromaBackend.category": "Chroma Backend",
+	"command.chromaBackend.setToken.title": "Set/Replace Backend Token",
+	"command.chromaBackend.clearToken.title": "Clear Backend Token",
+	"command.chromaBackend.health.title": "Test Backend Health",
+	"command.chromaBackend.connect.title": "Connect Backend Event Stream",
+	"command.chromaBackend.startSmokeWorkflow.title": "Start Backend Smoke Workflow",
+	"command.chromaBackend.disconnect.title": "Disconnect Backend Event Stream",
 	"configuration.title": "Roo Code",
 	"commands.allowedCommands.description": "Commands that can be auto-executed when 'Always approve execute operations' is enabled",
 	"commands.deniedCommands.description": "Command prefixes that will be automatically denied without asking for approval. In case of conflicts with allowed commands, the longest prefix match takes precedence. Add * to deny all commands.",
@@ -45,5 +52,11 @@
 	"settings.debug.description": "Enable debug mode to show additional buttons for viewing API conversation history and UI messages as prettified JSON in temporary files.",
 	"settings.debugProxy.enabled.description": "**Enable Debug Proxy** — Route all outbound network requests through a proxy for MITM debugging. Only active when running in debug mode (F5).",
 	"settings.debugProxy.serverUrl.description": "Proxy URL (e.g., `http://127.0.0.1:8888`). Only used when **Debug Proxy** is enabled.",
-	"settings.debugProxy.tlsInsecure.description": "Accept self-signed certificates from the proxy. **Required for MITM inspection.** ⚠️ Insecure — only use for local debugging."
+	"settings.debugProxy.tlsInsecure.description": "Accept self-signed certificates from the proxy. **Required for MITM inspection.** ⚠️ Insecure — only use for local debugging.",
+	"settings.chromaBackend.enabled.description": "Enable the Chroma Agentics backend bridge. When disabled, the bridge does not auto-connect or poll backend health.",
+	"settings.chromaBackend.url.description": "Base URL for the local Chroma Agentics backend.",
+	"settings.chromaBackend.connectionTimeoutMs.description": "Timeout in milliseconds for Chroma backend health and WebSocket connection attempts.",
+	"settings.chromaBackend.reconnect.enabled.description": "Reconnect the Chroma backend event stream after unexpected WebSocket closes.",
+	"settings.chromaBackend.reconnect.maxAttempts.description": "Maximum reconnect attempts for the Chroma backend event stream.",
+	"settings.chromaBackend.reconnect.initialDelayMs.description": "Initial reconnect delay in milliseconds for the Chroma backend event stream."
 }

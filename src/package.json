@@ -169,6 +169,36 @@
 				"command": "roo-cline.toggleAutoApprove",
 				"title": "%command.toggleAutoApprove.title%",
 				"category": "%configuration.title%"
+			},
+			{
+				"command": "chromaAgentics.backend.setToken",
+				"title": "%command.chromaBackend.setToken.title%",
+				"category": "%command.chromaBackend.category%"
+			},
+			{
+				"command": "chromaAgentics.backend.clearToken",
+				"title": "%command.chromaBackend.clearToken.title%",
+				"category": "%command.chromaBackend.category%"
+			},
+			{
+				"command": "chromaAgentics.backend.health",
+				"title": "%command.chromaBackend.health.title%",
+				"category": "%command.chromaBackend.category%"
+			},
+			{
+				"command": "chromaAgentics.backend.connect",
+				"title": "%command.chromaBackend.connect.title%",
+				"category": "%command.chromaBackend.category%"
+			},
+			{
+				"command": "chromaAgentics.backend.startSmokeWorkflow",
+				"title": "%command.chromaBackend.startSmokeWorkflow.title%",
+				"category": "%command.chromaBackend.category%"
+			},
+			{
+				"command": "chromaAgentics.backend.disconnect",
+				"title": "%command.chromaBackend.disconnect.title%",
+				"category": "%command.chromaBackend.category%"
 			}
 		],
 		"menus": {
@@ -429,6 +459,39 @@
 					"default": false,
 					"description": "%settings.debugProxy.tlsInsecure.description%",
 					"markdownDescription": "%settings.debugProxy.tlsInsecure.description%"
+				},
+				"chromaAgentics.backend.enabled": {
+					"type": "boolean",
+					"default": false,
+					"description": "%settings.chromaBackend.enabled.description%"
+				},
+				"chromaAgentics.backend.url": {
+					"type": "string",
+					"default": "http://localhost:5127",
+					"description": "%settings.chromaBackend.url.description%"
+				},
+				"chromaAgentics.backend.connectionTimeoutMs": {
+					"type": "number",
+					"default": 5000,
+					"minimum": 1,
+					"description": "%settings.chromaBackend.connectionTimeoutMs.description%"
+				},
+				"chromaAgentics.backend.reconnect.enabled": {
+					"type": "boolean",
+					"default": true,
+					"description": "%settings.chromaBackend.reconnect.enabled.description%"
+				},
+				"chromaAgentics.backend.reconnect.maxAttempts": {
+					"type": "number",
+					"default": 5,
+					"minimum": 0,
+					"description": "%settings.chromaBackend.reconnect.maxAttempts.description%"
+				},
+				"chromaAgentics.backend.reconnect.initialDelayMs": {
+					"type": "number",
+					"default": 1000,
+					"minimum": 1,
+					"description": "%settings.chromaBackend.reconnect.initialDelayMs.description%"
 				}
 			}
 		}
@@ -536,6 +599,7 @@
 		"vscode-material-icons": "^0.1.1",
 		"web-tree-sitter": "^0.25.6",
 		"workerpool": "^9.2.0",
+		"ws": "8.20.0",
 		"yaml": "^2.8.0",
 		"zhipu-ai-provider": "^0.2.2",
 		"zod": "3.25.76"
@@ -565,9 +629,11 @@
 		"@types/tmp": "^0.2.6",
 		"@types/turndown": "^5.0.5",
 		"@types/vscode": "^1.84.0",
+		"@types/ws": "8.18.1",
 		"@vscode/test-electron": "^2.5.2",
 		"@vscode/vsce": "3.3.2",
 		"ai": "^6.0.75",
+		"ajv": "8.18.0",
 		"esbuild-wasm": "^0.25.0",
 		"execa": "^9.5.2",
 		"glob": "^11.1.0",

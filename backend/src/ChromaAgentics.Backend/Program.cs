@@ -1,7 +1,12 @@
 using System.Text.Json;
+using ChromaAgentics.Backend.Acknowledgements;
 using ChromaAgentics.Backend.Configuration;
+using ChromaAgentics.Backend.Events;
 using ChromaAgentics.Backend.Health;
+using ChromaAgentics.Backend.Persistence;
+using ChromaAgentics.Backend.Protocol;
 using ChromaAgentics.Backend.Streaming;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,12 +23,26 @@ builder.Logging.AddFilter("System.Net.Http.HttpClient", LogLevel.Warning);
 builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddSingleton(backendOptions);
 builder.Services.AddSingleton(dependencyOptions);
+builder.Services.AddDbContext<ChromaAgenticsDbContext>(options =>
+{
+    var connectionString = string.IsNullOrWhiteSpace(dependencyOptions.DatabaseConnectionString)
+        ? "Host=localhost;Database=chroma_agentics;Username=chroma;Password=not_configured"
+        : dependencyOptions.DatabaseConnectionString;
+
+    options.UseNpgsql(connectionString);
+});
 builder.Services.AddSingleton<IPostgresHealthProbe, PostgresHealthProbe>();
 builder.Services.AddHttpClient<IOllamaHealthProbe, OllamaHealthProbe>(client =>
 {
     client.Timeout = TimeSpan.FromSeconds(2);
 });
 builder.Services.AddSingleton<IDependencyHealthService, DependencyHealthService>();
+builder.Services.AddScoped<IEventStore, PostgresEventStore>();
+builder.Services.AddScoped<IAcknowledgementStore, PostgresAcknowledgementStore>();
+builder.Services.AddScoped<IProtocolMessageValidator, ProtocolMessageValidator>();
+builder.Services.AddScoped<ProtocolErrorFactory>();
+builder.Services.AddSingleton<IWorkflowStartFailureInjector, NoopWorkflowStartFailureInjector>();
+builder.Services.AddScoped<IWorkflowProtocolService, WorkflowProtocolService>();
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
     options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;

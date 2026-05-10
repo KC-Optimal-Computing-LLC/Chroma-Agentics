@@ -1,0 +1,55 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://chroma-agentics.local/schemas/protocol/v0.2/error-envelope.schema.json",
+	"title": "error",
+	"allOf": [
+		{
+			"$ref": "envelope.schema.json"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"sequence": {
+					"type": "null"
+				},
+				"name": {
+					"const": "error"
+				},
+				"idempotencyKey": {
+					"type": "null"
+				},
+				"payload": {
+					"type": "object",
+					"additionalProperties": false,
+					"required": ["code", "message", "retryable"],
+					"properties": {
+						"code": {
+							"type": "string",
+							"enum": [
+								"invalid_json",
+								"bad_protocol_version",
+								"unknown_message_name",
+								"missing_required_field",
+								"invalid_id",
+								"workflow_not_found",
+								"session_not_found",
+								"idempotency_conflict",
+								"future_ack",
+								"future_sequence",
+								"workflow_cancelled",
+								"unauthorized",
+								"internal_error"
+							]
+						},
+						"message": {
+							"type": "string"
+						},
+						"retryable": {
+							"type": "boolean"
+						}
+					}
+				}
+			}
+		}
+	]
+}

@@ -1,0 +1,44 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://chroma-agentics.local/schemas/protocol/v0.2/session-resume.schema.json",
+	"title": "session.resume",
+	"allOf": [
+		{
+			"$ref": "envelope.schema.json"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"workspaceId": {
+					"type": "string",
+					"format": "uuid"
+				},
+				"workflowId": {
+					"type": "string",
+					"format": "uuid"
+				},
+				"sessionId": {
+					"type": "string",
+					"format": "uuid"
+				},
+				"sequence": {
+					"type": "null"
+				},
+				"name": {
+					"const": "session.resume"
+				},
+				"payload": {
+					"type": "object",
+					"additionalProperties": false,
+					"required": ["lastSeenSequence"],
+					"properties": {
+						"lastSeenSequence": {
+							"type": "integer",
+							"minimum": 0
+						}
+					}
+				}
+			}
+		}
+	]
+}

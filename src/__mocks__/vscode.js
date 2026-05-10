@@ -62,10 +62,18 @@ export const window = {
 	showErrorMessage: () => Promise.resolve(),
 	showWarningMessage: () => Promise.resolve(),
 	showInformationMessage: () => Promise.resolve(),
+	showInputBox: () => Promise.resolve(),
 	createOutputChannel: () => ({
 		appendLine: () => {},
 		append: () => {},
 		clear: () => {},
+		show: () => {},
+		dispose: () => {},
+	}),
+	createStatusBarItem: () => ({
+		text: "",
+		tooltip: "",
+		command: "",
 		show: () => {},
 		dispose: () => {},
 	}),
@@ -137,6 +145,11 @@ export const OverviewRulerLane = {
 	Full: 7,
 }
 
+export const StatusBarAlignment = {
+	Left: 1,
+	Right: 2,
+}
+
 export const CodeAction = class {
 	constructor(title, kind) {
 		this.title = title
@@ -168,6 +181,7 @@ export default {
 	FileType,
 	DiagnosticSeverity,
 	OverviewRulerLane,
+	StatusBarAlignment,
 	EventEmitter,
 	CodeAction,
 	CodeActionKind,

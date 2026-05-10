@@ -30,16 +30,21 @@ Chroma Agentics is maintained by KC Optimal Computing LLC as part of a broader m
 
 This README describes the intended architecture and development direction. Many components are planned or in progress. Features listed below may not yet be available in the repository.
 
+Phase 2: Backend Foundation is complete. Current focus is now Phase 3: Model
+Provider Layer. The verification artifact for this milestone is
+`docs/PHASE_02_SPRINT_03_VV_REPORT.md`.
+
 **Current implementation status:**
 
 - [x] Roo Code fork baseline imported
-- [ ] Verify full extension build, launch, and baseline behavior
-- [ ] C#/.NET backend service shell
+- [x] Verify full extension build, launch, and baseline behavior
+- [x] C#/.NET backend service shell
 - [ ] Ollama provider adapter + streaming
 - [ ] PostgreSQL schema + migrations
 - [ ] pgvector RAG indexing pipeline
 - [ ] Microsoft Agent Framework 1.0+ orchestration integration
-- [ ] Extension ↔ Backend API bridge (HTTP/WebSocket)
+- [x] Extension ↔ Backend API bridge (HTTP/WebSocket)
+- [x] Phase 2 Backend Foundation verified complete
 - [ ] Optional Next.js web dashboard (roadmap)
 - [ ] LangGraph + n8n hybrid evaluation (exploratory, later phases)
 
@@ -319,12 +324,12 @@ Planned documentation includes:
 
 Current contribution priorities:
 
-- Verify and stabilize the Roo Code fork baseline (build, launch, core behavior)
-- Define baseline test commands for the inherited extension layer
-- Define the Extension ↔ Backend API contract
-- Create the C# backend skeleton
-- Add local development configuration (.env.example, docker-compose)
-- Draft the PostgreSQL schema for state, checkpoints, and memory
+- Implement the Ollama chat adapter with streaming
+- Define provider abstraction and capability metadata
+- Preserve backend and extension bridge regression coverage while Phase 3 lands
+- Draft the PostgreSQL schema for conversation state, checkpoints, and memory
+- Prepare the pgvector retrieval pipeline foundations
+- Tighten backend deployment and local-development documentation for the provider layer
 
 These are the best starting points for new contributors. Planned issue labels include:
 
@@ -342,38 +347,38 @@ These are the best starting points for new contributors. Planned issue labels in
 
 ## Tech Stack & Implementation State
 
-| Layer                        | Technology                            | Scope       | Implementation State           |
-| ---------------------------- | ------------------------------------- | ----------- | ------------------------------ |
-| Editor Integration           | TypeScript, VS Code APIs, pnpm        | Core        | Imported, pending verification |
-| Orchestration                | Microsoft Agent Framework 1.0+ (.NET) | Core        | Planned                        |
-| Backend                      | C# / .NET 8+                          | Core        | Planned                        |
-| Persistence & RAG            | PostgreSQL + pgvector                 | Core        | Planned                        |
-| Inference                    | Ollama (primary), pluggable providers | Core        | Planned                        |
-| Observability                | OpenTelemetry-first                   | Core        | Planned                        |
-| LangGraph experiment tracing | LangSmith optional                    | Exploratory | Exploratory                    |
-| Optional Web Layer           | Next.js / React                       | Roadmap     | Roadmap                        |
-| Advanced Business Logic      | LangGraph                             | Exploratory | Exploratory                    |
-| Visual Integration           | n8n                                   | Exploratory | Exploratory                    |
+| Layer                        | Technology                            | Scope       | Implementation State        |
+| ---------------------------- | ------------------------------------- | ----------- | --------------------------- |
+| Editor Integration           | TypeScript, VS Code APIs, pnpm        | Core        | Imported, verified          |
+| Orchestration                | Microsoft Agent Framework 1.0+ (.NET) | Core        | Planned                     |
+| Backend                      | C# / .NET 8+                          | Core        | Phase 2 foundation complete |
+| Persistence & RAG            | PostgreSQL + pgvector                 | Core        | Planned                     |
+| Inference                    | Ollama (primary), pluggable providers | Core        | Planned                     |
+| Observability                | OpenTelemetry-first                   | Core        | Planned                     |
+| LangGraph experiment tracing | LangSmith optional                    | Exploratory | Exploratory                 |
+| Optional Web Layer           | Next.js / React                       | Roadmap     | Roadmap                     |
+| Advanced Business Logic      | LangGraph                             | Exploratory | Exploratory                 |
+| Visual Integration           | n8n                                   | Exploratory | Exploratory                 |
 
 ---
 
 ## Roadmap
 
-### Phase 1: Fork & Baseline (Current focus)
+### Phase 1: Fork & Baseline (Complete)
 
 - Preserve Roo Code extension functionality and build process
 - Update branding, metadata, and extension identity
 - Add Fork Notice and license compliance documentation
 - Establish contribution and code of conduct processes
 
-### Phase 2: Backend Foundation
+### Phase 2: Backend Foundation (Complete)
 
 - C#/.NET backend service skeleton
 - Extension ↔ Backend API definition (HTTP/WebSocket)
 - Basic streaming of agent events
 - Local development auth/binding
 
-### Phase 3: Model Provider Layer
+### Phase 3: Model Provider Layer (Current focus)
 
 - Ollama chat adapter with streaming
 - Local model discovery and capability metadata
@@ -404,6 +409,8 @@ These are the best starting points for new contributors. Planned issue labels in
 
 ### Phase 1: Fork & Baseline is complete when
 
+Status: complete.
+
 - The extension installs dependencies successfully.
 - The extension builds without unexpected errors.
 - A development host launches in VS Code.
@@ -412,6 +419,8 @@ These are the best starting points for new contributors. Planned issue labels in
 - License, NOTICE, fork attribution, and basic contribution docs exist.
 
 ### Phase 2: Backend Foundation is complete when
+
+Status: complete. Verified in `docs/PHASE_02_SPRINT_03_VV_REPORT.md`.
 
 - The C#/.NET backend starts locally.
 - A health endpoint is available.

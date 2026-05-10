@@ -137,6 +137,10 @@ vi.mock("../services/mcp/McpServerManager", () => ({
 	},
 }))
 
+vi.mock("../services/backend-bridge", () => ({
+	registerBackendBridge: vi.fn(),
+}))
+
 vi.mock("../services/code-index/manager", () => ({
 	CodeIndexManager: {
 		getInstance: vi.fn().mockReturnValue(null),
@@ -260,6 +264,18 @@ describe("extension.ts", () => {
 		await activate(mockContext)
 
 		expect(dotenvx.config).toHaveBeenCalledTimes(1)
+	})
+
+	test("registers the Chroma backend bridge through activation", async () => {
+		vi.resetModules()
+		vi.clearAllMocks()
+
+		const { registerBackendBridge } = await import("../services/backend-bridge")
+		const { activate } = await import("../extension")
+
+		await activate(mockContext)
+
+		expect(registerBackendBridge).toHaveBeenCalledWith(mockContext)
 	})
 
 	describe("Roo model cache refresh on auth state change (ROO-202)", () => {
